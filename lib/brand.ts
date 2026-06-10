@@ -3,7 +3,7 @@ export const PROOF_LOGOS = {
 	horizontalOnDark: '/logos/horizontal-on-dark.png',
 } as const
 
-export type ProofLogoBackground =  'dark'
+export type ProofLogoBackground = 'light' | 'dark'
 
 export const getHorizontalLogoSrc = (
 	background: ProofLogoBackground
