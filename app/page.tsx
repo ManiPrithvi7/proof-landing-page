@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ProofLogo } from '@/components/brand/proof-logo'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -153,11 +154,11 @@ export default async function HomePage() {
 				<div className="mx-auto flex h-[60px] max-w-[900px] items-center justify-between px-6">
 					<Link
 						href="/"
-						className="font-serif text-xl tracking-tight"
+						className="inline-flex items-center"
 						aria-label="Proof home"
 						tabIndex={0}
 					>
-						Proof
+						<ProofLogo background="light" priority />
 					</Link>
 
 					<ul className="hidden items-center gap-8 md:flex">
