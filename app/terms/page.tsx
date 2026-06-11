@@ -99,11 +99,15 @@ export default function TermsPage() {
 							</p>
 						</div>
 						<CalloutNote>
-							<strong className="text-gold">Note on hardware:</strong> A
-							physical PROOF Display device — designed to show reviews in-store —
-							is currently under development. These terms apply to the web
-							dashboard. Updated hardware-specific terms will be published when
-							the device ships.
+							<strong className="text-gold">Proof device (in development):</strong>{' '}
+							We are developing a physical Proof device that will display aggregate
+							trust metrics (e.g. Google star rating, review count, Instagram follower
+							count) in your business premises via secure MQTT over TLS.{' '}
+							<strong className="font-semibold text-text">
+								When available, device-specific terms will be added to this page.
+							</strong>{' '}
+							The sections below describing device data flow are provided for
+							transparency and apply only if you choose to enable this hardware.
 						</CalloutNote>
 					</section>
 
@@ -191,6 +195,14 @@ export default function TermsPage() {
 								v="Disconnect from your Proof dashboard or via Shopify Admin → Apps → Proof → Delete."
 							/>
 						</IntegrationBlock>
+						<CalloutNote>
+							<strong className="text-gold">Proof device (in development):</strong>{' '}
+							When available, aggregate metrics from connected platforms may be shown
+							on the Proof device at your business premises. Only aggregate numbers
+							are displayed—no review text, post content, or personal data. See §01
+							for development status. You are responsible for device placement and
+							ensuring in-store display complies with your local rules.
+						</CalloutNote>
 					</section>
 
 					<div className="mb-14 h-px bg-line" role="separator" />
@@ -246,6 +258,14 @@ export default function TermsPage() {
 								Google&apos;s, Meta&apos;s, and Shopify&apos;s own terms of
 								service. Proof does not grant rights beyond what each platform
 								permits.
+							</TermsLi>
+							<TermsLi>
+								<strong className="font-semibold text-text">
+									Device responsibility.
+								</strong>{' '}
+								Physical security and placement of any Proof device at your
+								location. You are responsible for third-party visibility of
+								aggregate metrics in the store.
 							</TermsLi>
 						</ul>
 					</section>
@@ -373,6 +393,11 @@ export default function TermsPage() {
 								We are not liable for any disruption to your connected platforms
 								(Google, Instagram, Shopify) caused by changes to their own
 								APIs or policies.
+							</TermsLi>
+							<TermsLi>
+								We are not liable for aggregate data visible on Proof devices to
+								customers, employees, or others on your premises; choosing to
+								display metrics publicly is your decision.
 							</TermsLi>
 						</ul>
 					</section>

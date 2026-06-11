@@ -109,6 +109,13 @@ export default function DeleteDataPage() {
 								</p>
 							</div>
 						</Step>
+						<Step n={4} title="Stop Proof device updates (if applicable)">
+							If you use or plan to use a Proof device: disconnect integrations in
+							your dashboard (Step 1) to stop server-side updates—the device will
+							stop receiving updates and return to its default idle screen.
+							Power-cycling the device clears volatile on-device aggregate data
+							immediately.
+						</Step>
 					</ol>
 				</section>
 

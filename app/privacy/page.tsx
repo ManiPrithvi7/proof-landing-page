@@ -68,7 +68,19 @@ export default function PrivacyPage() {
 						<p className="mb-6 text-[14px] leading-[1.8] text-sub">
 							Data is only collected when you explicitly authorise a connection
 							via that platform&apos;s OAuth flow. We collect three categories of
-							data across our integrations.
+							data across our integrations. Collected data is displayed primarily
+							on your private authenticated Proof dashboard (
+							<a
+								href="https://dashboard.withproof.io"
+								className="text-gold underline underline-offset-2 hover:text-gold/90"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								dashboard.withproof.io
+							</a>
+							). When enabled, the same aggregate metrics may also appear on a
+							connected Proof device (in development). See §03 Display surfaces
+							for details.
 						</p>
 
 						<p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.06em] text-dim">
@@ -113,11 +125,11 @@ export default function PrivacyPage() {
 							rows={[
 								{
 									data: 'Aggregate star rating',
-									why: 'Displayed as your primary trust metric on the dashboard',
+									why: 'Displayed on your Proof dashboard and, when enabled, on a connected Proof device (in development)',
 								},
 								{
 									data: 'Total review count',
-									why: 'Used to track review milestones and power the celebration tracker',
+									why: 'Used to track review milestones and the celebration tracker on your Proof dashboard and, when enabled, on a connected Proof device (in development)',
 								},
 								{
 									data: 'Latest review text',
@@ -176,7 +188,7 @@ export default function PrivacyPage() {
 							rows={[
 								{
 									data: 'Follower count',
-									why: 'Displayed as a social growth metric on the dashboard',
+									why: 'Displayed on your Proof dashboard as a social growth metric and, when enabled, on a connected Proof device (in development)',
 								},
 								{
 									data: 'Reach (aggregate)',
@@ -192,6 +204,15 @@ export default function PrivacyPage() {
 								},
 							]}
 						/>
+						<Callout variant="gold">
+							<strong className="text-gold">Proof device (in development).</strong>{' '}
+							When available, aggregate metrics from connected integrations—including
+							Instagram follower count and Google star rating / review count—may be
+							transmitted from our servers to a Proof device at your business premises
+							via MQTT over TLS. Only aggregate numbers are shown; no review text, post
+							content, media, or personal data. The device is designed for volatile
+							in-memory display only (no persistent local storage of platform data).
+						</Callout>
 
 						<PlatformLabel
 							accentClassName="text-[#96bf48]"
@@ -240,8 +261,13 @@ export default function PrivacyPage() {
 						<ul className="list-none">
 							<TermsLi>
 								To display your trust metrics, review activity, social growth,
-								and revenue signals on your Proof dashboard — the sole purpose
-								of every data point we collect.
+								and revenue signals on your Proof dashboard and, when enabled, on
+								connected Proof devices at your business location (see Display
+								surfaces below) — the sole purpose of every data point we collect.
+							</TermsLi>
+							<TermsLi>
+								To transmit aggregate trust metrics to connected Proof devices over
+								secure MQTT channels when that hardware is enabled on your account.
 							</TermsLi>
 							<TermsLi>
 								To send you service notifications (e.g. new review alerts, sync
@@ -253,13 +279,41 @@ export default function PrivacyPage() {
 							</TermsLi>
 							<TermsLi>
 								We do not use your data for advertising, profiling, or any
-								purpose beyond operating the dashboard you&apos;ve authorised.
+								purpose beyond operating the Proof service you have authorised
+								(dashboard and connected Proof devices).
 							</TermsLi>
 							<TermsLi>
 								We do not sell, license, or share your data with any third party
 								for their own purposes.
 							</TermsLi>
 						</ul>
+						<p className="mb-3 mt-8 text-[12px] font-semibold uppercase tracking-[0.06em] text-dim">
+							Display surfaces
+						</p>
+						<ol className="list-decimal space-y-3 pl-5 text-[14px] leading-[1.8] text-sub marker:text-dim">
+							<li>
+								<strong className="font-semibold text-text">Proof Dashboard</strong>{' '}
+								(
+								<a
+									href="https://dashboard.withproof.io"
+									className="text-gold underline underline-offset-2 hover:text-gold/90"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									dashboard.withproof.io
+								</a>
+								) — private, authenticated web interface for the business owner and
+								authorized team members.
+							</li>
+							<li>
+								<strong className="font-semibold text-text">Proof device</strong> —
+								optional in-store hardware, currently in development. Shows aggregate
+								metrics from connected platforms (e.g. Google star rating, review
+								count, Instagram follower count). Visible to anyone in your premises.
+								Real-time updates via MQTT over TLS. No OAuth tokens on device.
+								Volatile memory only.
+							</li>
+						</ol>
 					</section>
 
 					<div className="mb-14 h-px bg-line" role="separator" />
@@ -339,6 +393,21 @@ export default function PrivacyPage() {
 									</>
 								}
 							/>
+							<RetCard
+								label="Proof device data"
+								value={
+									<>
+										Aggregate metrics held in device memory only (volatile; clears
+										on power cycle).{' '}
+										<strong className="font-medium text-text">
+											No server-side logs of device transmissions are retained
+											beyond real-time delivery
+										</strong>
+										, unless temporarily enabled for debugging—in which case logs
+										are purged within 7 days. No OAuth tokens stored on the device.
+									</>
+								}
+							/>
 						</div>
 					</section>
 
@@ -411,6 +480,10 @@ export default function PrivacyPage() {
 								Share any platform data with third parties for advertising,
 								analytics resale, or profiling purposes.
 							</TermsLi>
+							<TermsLi>
+								When the Proof device is available, send OAuth tokens, review text,
+								Instagram media, or private messages to it.
+							</TermsLi>
 						</ul>
 					</section>
 
@@ -445,6 +518,20 @@ export default function PrivacyPage() {
 							<TermsLi>
 								Access to production systems is restricted to authorised
 								Statsnapp Technologies personnel only.
+							</TermsLi>
+							<TermsLi>
+								MQTT between Proof servers and Proof devices uses{' '}
+								<strong className="font-semibold text-text">TLS</strong>; devices
+								authenticate with{' '}
+								<strong className="font-semibold text-text">
+									unique per-device credentials
+								</strong>
+								. No OAuth tokens transmitted to or stored on devices.
+							</TermsLi>
+							<TermsLi>
+								Aggregate metrics on a Proof device may be visible to
+								customers/employees on your premises; device placement is the
+								merchant&apos;s responsibility.
 							</TermsLi>
 						</ul>
 					</section>
@@ -772,10 +859,11 @@ function Callout({
 	variant,
 }: {
 	children: ReactNode
-	variant: 'pubsub'
+	variant: 'pubsub' | 'gold'
 }) {
 	const styles = {
 		pubsub: 'border-pubsub/30 bg-pubsub/5 text-sub',
+		gold: 'border-gold/35 bg-gold/[0.05] text-sub',
 	} as const
 
 	return (
