@@ -6,7 +6,7 @@ export function LegalPageHeader() {
 		<header className="sticky top-0 z-50 border-b border-line bg-bg/90 backdrop-blur-[14px]">
 			<div className="mx-auto flex h-14 max-w-[960px] items-center justify-between px-5 sm:px-10">
 				<Link href="/" className="inline-flex items-center" aria-label="Proof home">
-					<ProofLogo background="dark" priority />
+					<ProofLogo background="light" priority />
 				</Link>
 				<Link
 					href="/"
