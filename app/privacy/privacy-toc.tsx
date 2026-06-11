@@ -14,7 +14,8 @@ const TOC_ITEMS = [
 	{ id: 'p07', label: 'Security' },
 	{ id: 'p08', label: 'Your Rights' },
 	{ id: 'p09', label: 'Third-Party Services' },
-	{ id: 'p10', label: 'Changes' },
+	{ id: 'p10', label: 'Cookies & Tracking' },
+	{ id: 'p11', label: 'Changes' },
 ] as const
 
 export const PrivacyToc = () => {
@@ -80,7 +81,12 @@ export const PrivacyToc = () => {
 			>
 				→ Terms of Service
 			</Link>
+			<Link
+				href="/delete-data"
+				className="block border-l-2 border-transparent py-1.5 pl-2.5 text-[12px] text-gold transition-colors hover:text-gold/90"
+			>
+				→ Data Deletion
+			</Link>
 		</nav>
 	)
 }
-

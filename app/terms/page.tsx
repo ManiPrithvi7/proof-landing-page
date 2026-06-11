@@ -184,9 +184,18 @@ export default function TermsPage() {
 							/>
 							<IntRow
 								k="Revoke"
-								v="Disconnect from your Proof dashboard or via Instagram → Settings → Apps and Websites."
+								v="Disconnect from your Proof dashboard or via Instagram app → Menu → Settings and privacy → Website permissions → Apps and websites → Active → Remove Proof."
 							/>
 						</IntegrationBlock>
+						<CalloutNote>
+							<strong className="text-gold">Instagram account type:</strong>{' '}
+							Instagram Business or Creator account required. Proof is built for
+							local businesses and only supports professional accounts. This is a
+							product choice — the Basic Display API itself supports personal
+							accounts, but our dashboard features require a public business
+							presence. We access only aggregate metrics available through the
+							Basic Display API.
+						</CalloutNote>
 						<IntegrationBlock variant="shop">
 							<IntRow
 								k="What we read"
@@ -216,6 +225,22 @@ export default function TermsPage() {
 					<section id="s03" className="mb-14 scroll-mt-28">
 						<SectionHeading k="03" title="Acceptable Use" />
 						<ul className="list-none">
+							<TermsLi>
+								<strong className="font-semibold text-text">
+									Age requirement.
+								</strong>{' '}
+								By creating a Proof account, you represent that you are at least
+								13 years old and, if under 18, have parental or guardian consent
+								to use this service. Proof is designed for business use. We do
+								not knowingly collect data from children under 13.
+							</TermsLi>
+							<TermsLi>
+								<strong className="font-semibold text-text">
+									No data resale.
+								</strong>{' '}
+								We do not sell, rent, or license your platform data to any third
+								party.
+							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-text">
 									One business per account.
@@ -277,9 +302,8 @@ export default function TermsPage() {
 						<SectionHeading k="05" title="Service Availability" />
 						<ul className="list-none">
 							<TermsLi>
-								Proof is provided on a best-effort basis during its current
-								development phase. We do not guarantee any specific level of
-								uptime or SLA.
+								While we strive for high availability, Proof is provided without
+								guaranteed uptime during its current development phase.
 							</TermsLi>
 							<TermsLi>
 								Downtime may occur due to changes in Google, Meta, or Shopify
@@ -291,6 +315,19 @@ export default function TermsPage() {
 							<TermsLi>
 								API changes by any connected platform may temporarily affect
 								dashboard data until Proof is updated to reflect those changes.
+							</TermsLi>
+							<TermsLi>
+								If any connected platform discontinues its API or changes terms
+								in a way that prevents Proof from functioning, we are not liable.
+								We will notify affected users by email and provide options to
+								export or delete their data via{' '}
+								<Link
+									href="/delete-data"
+									className="text-gold underline underline-offset-2 hover:text-gold/90"
+								>
+									/delete-data
+								</Link>
+								.
 							</TermsLi>
 						</ul>
 					</section>
@@ -308,15 +345,22 @@ export default function TermsPage() {
 							</p>
 							<p>
 								<strong className="font-semibold text-text">Data deletion.</strong>{' '}
-								All data linked to your account is permanently deleted within 24
-								hours of account closure or upon written request to{' '}
+								All data linked to your account is permanently deleted within 1–2
+								business days of account closure or upon written request. See our{' '}
+								<Link
+									href="/delete-data"
+									className="text-gold underline underline-offset-2 hover:text-gold/90"
+								>
+									Data Deletion Instructions
+								</Link>{' '}
+								or email{' '}
 								<a
 									href="mailto:Founder@withproof.io"
 									className="text-teal underline underline-offset-2 hover:text-green"
 								>
 									Founder@withproof.io
 								</a>
-								.
+								. You will receive a confirmation email once deletion is complete.
 							</p>
 							<p>
 								<strong className="font-semibold text-text">
@@ -363,7 +407,24 @@ export default function TermsPage() {
 					<div className="mb-14 h-px bg-line" role="separator" />
 
 					<section id="s08" className="mb-14 scroll-mt-28">
-						<SectionHeading k="08" title="Third-Party Platforms" />
+						<SectionHeading k="08" title="Intellectual Property" />
+						<div className="text-[13px] leading-[1.8] text-sub [&_p]:mb-3 [&_p:last-child]:mb-0">
+							<p>
+								All Proof branding, software, and dashboard design are owned by
+								Statsnapp Technologies. Dashboard data originates from Google,
+								Meta, and Shopify and is shown under your authorization.
+							</p>
+							<p>
+								You may share your own dashboard data; you may not reproduce
+								Proof&apos;s software or branding without written permission.
+							</p>
+						</div>
+					</section>
+
+					<div className="mb-14 h-px bg-line" role="separator" />
+
+					<section id="s09" className="mb-14 scroll-mt-28">
+						<SectionHeading k="09" title="Third-Party Platforms" />
 						<p className="mb-4 text-[13px] leading-[1.8] text-sub">
 							By connecting any integration, you acknowledge that your use of
 							that platform&apos;s data is also subject to their own terms and
@@ -439,8 +500,8 @@ export default function TermsPage() {
 
 					<div className="mb-14 h-px bg-line" role="separator" />
 
-					<section id="s09" className="mb-14 scroll-mt-28">
-						<SectionHeading k="09" title="Governing Law" />
+					<section id="s10" className="mb-14 scroll-mt-28">
+						<SectionHeading k="10" title="Governing Law" />
 						<div className="text-[13px] leading-[1.8] text-sub [&_p]:mb-3 [&_p:last-child]:mb-0">
 							<p>
 								These terms are governed by and construed in accordance with the
@@ -457,8 +518,8 @@ export default function TermsPage() {
 
 					<div className="mb-14 h-px bg-line" role="separator" />
 
-					<section id="s10" className="mb-14 scroll-mt-28">
-						<SectionHeading k="10" title="Changes to These Terms" />
+					<section id="s11" className="mb-14 scroll-mt-28">
+						<SectionHeading k="11" title="Changes to These Terms" />
 						<p className="mb-7 text-[13px] leading-[1.8] text-sub">
 							We will notify you by email before making material changes to these
 							terms. Continued use of Proof after notification constitutes
@@ -470,24 +531,43 @@ export default function TermsPage() {
 							<p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-dim">
 								Also read
 							</p>
-							<Link
-								href="/privacy"
-								className="inline-flex items-center gap-2 text-[13px] text-sub transition-colors hover:text-text"
-							>
-								<svg
-									width="13"
-									height="13"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="1.8"
-									aria-hidden
+							<div className="flex flex-col gap-3">
+								<Link
+									href="/privacy"
+									className="inline-flex items-center gap-2 text-[13px] text-sub transition-colors hover:text-text"
 								>
-									<rect x="3" y="3" width="18" height="18" rx="3" />
-									<path d="M9 12l2 2 4-4" />
-								</svg>
-								Privacy Policy — how your data is collected, used, and protected
-							</Link>
+									<svg
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.8"
+										aria-hidden
+									>
+										<rect x="3" y="3" width="18" height="18" rx="3" />
+										<path d="M9 12l2 2 4-4" />
+									</svg>
+									Privacy Policy — how your data is collected, used, and protected
+								</Link>
+								<Link
+									href="/delete-data"
+									className="inline-flex items-center gap-2 text-[13px] text-sub transition-colors hover:text-text"
+								>
+									<svg
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.8"
+										aria-hidden
+									>
+										<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" />
+									</svg>
+									Data Deletion Instructions — how to delete your account and connected data
+								</Link>
+							</div>
 						</div>
 						<div className="mt-5 rounded-xl border border-line bg-surface p-5 sm:p-6">
 							<p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-dim">
@@ -527,6 +607,12 @@ export default function TermsPage() {
 							className="text-[12px] text-dim transition-colors hover:text-sub"
 						>
 							Terms of Service
+						</Link>
+						<Link
+							href="/delete-data"
+							className="text-[12px] text-dim transition-colors hover:text-sub"
+						>
+							Data Deletion
 						</Link>
 						<a
 							href="mailto:Founder@withproof.io"
@@ -625,7 +711,7 @@ function IntegrationBlock({
 			iconBg: 'bg-[#c13584]/10',
 			title: 'text-[#c13584]',
 			name: 'Instagram',
-			tag: 'Instagram Basic Display API · Read-only · Business account required',
+			tag: 'Instagram Basic Display API · Read-only · Business or Creator account',
 			icon: (
 				<svg
 					width="13"

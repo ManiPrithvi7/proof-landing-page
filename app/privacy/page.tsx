@@ -360,7 +360,7 @@ export default function PrivacyPage() {
 								value={
 									<>
 										<strong className="font-medium text-text">
-											All data deleted within 24 hours
+											All data deleted within 1–2 business days
 										</strong>{' '}
 										of account cancellation or written request.
 									</>
@@ -394,8 +394,13 @@ export default function PrivacyPage() {
 								<strong className="font-semibold text-[#c13584]">
 									Instagram
 								</strong>{' '}
-								— via Meta&apos;s Instagram Basic Display API OAuth flow. Business
-								account required.
+								— via Meta&apos;s Instagram Basic Display API OAuth flow.
+								Instagram Business or Creator account required. Proof is built for
+								local businesses and only supports professional accounts. This is
+								a product choice — the Basic Display API itself supports personal
+								accounts, but our dashboard features require a public business
+								presence. We access only aggregate metrics available through the
+								Basic Display API.
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-[#96bf48]">
@@ -480,16 +485,34 @@ export default function PrivacyPage() {
 								<strong className="font-semibold text-text">
 									Revoke access anytime.
 								</strong>{' '}
-								Disconnect any integration from your Proof dashboard, or
-								directly via each platform&apos;s settings (Google Account → Security,
-								Instagram → Apps and Websites, Shopify Admin → Apps).
+								Disconnect any integration from your Proof dashboard, or directly
+								via each platform&apos;s settings: Google Account → Security →
+								Third-party apps with account access → Remove Proof; Instagram
+								app → Menu → Settings and privacy → Website permissions → Apps
+								and websites → Active → Remove Proof; Shopify Admin → Settings →
+								Apps and sales channels → Remove Proof.
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-text">
 									Request data deletion.
 								</strong>{' '}
-								Email Founder@withproof.io — all linked data is permanently
-								deleted within 24 hours of confirmation.
+								Visit{' '}
+								<Link
+									href="/delete-data"
+									className="text-gold underline underline-offset-2 hover:text-gold/90"
+								>
+									/delete-data
+								</Link>{' '}
+								or email{' '}
+								<a
+									href="mailto:Founder@withproof.io"
+									className="text-gold underline underline-offset-2 hover:text-gold/90"
+								>
+									Founder@withproof.io
+								</a>
+								. All linked data is permanently deleted within 1–2 business days
+								of confirmation. You will receive a confirmation email when
+								deletion is complete.
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-text">
@@ -497,6 +520,33 @@ export default function PrivacyPage() {
 								</strong>{' '}
 								Request a summary of what data Proof holds for your account at
 								any time.
+							</TermsLi>
+							<TermsLi>
+								<strong className="font-semibold text-text">
+									Eligibility.
+								</strong>{' '}
+								By creating a Proof account, you represent that you are at least
+								13 years old and, if under 18, have parental or guardian consent
+								to use this service. Proof is designed for business use. We do
+								not knowingly collect data from children under 13.
+							</TermsLi>
+							<TermsLi>
+								<strong className="font-semibold text-text">
+									Legal basis &amp; international users.
+								</strong>{' '}
+								By connecting your Instagram or other platform account, you
+								consent to the data collection described in this policy. Users in
+								the EU and California can exercise their data protection rights
+								(access, correction, deletion) by contacting Founder@withproof.io
+								or visiting{' '}
+								<Link
+									href="/delete-data"
+									className="text-gold underline underline-offset-2 hover:text-gold/90"
+								>
+									/delete-data
+								</Link>
+								. We comply with applicable data protection laws in these
+								jurisdictions.
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-text">
@@ -583,7 +633,19 @@ export default function PrivacyPage() {
 					<div className="mb-14 h-px bg-line" role="separator" />
 
 					<section id="p10" className="mb-14 scroll-mt-28">
-						<SectionHeading k="10" title="Changes to This Policy" />
+						<SectionHeading k="10" title="Cookies & Tracking" />
+						<p className="text-[14px] leading-[1.8] text-sub">
+							The withproof.io marketing site does not set cookies and does not
+							use third-party analytics or advertising trackers. The Proof
+							dashboard (dashboard.withproof.io) uses session cookies solely to
+							keep you signed in. No cross-site tracking.
+						</p>
+					</section>
+
+					<div className="mb-14 h-px bg-line" role="separator" />
+
+					<section id="p11" className="mb-14 scroll-mt-28">
+						<SectionHeading k="11" title="Changes to This Policy" />
 						<p className="mb-7 text-[14px] leading-[1.8] text-sub">
 							We will notify you by email before making material changes to this
 							privacy policy. The &quot;Last updated&quot; date at the top of this
@@ -595,24 +657,43 @@ export default function PrivacyPage() {
 							<p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-dim">
 								Also read
 							</p>
-							<Link
-								href="/terms"
-								className="inline-flex items-center gap-2 text-[13px] text-sub transition-colors hover:text-text"
-							>
-								<svg
-									width="13"
-									height="13"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="1.8"
-									aria-hidden
+							<div className="flex flex-col gap-3">
+								<Link
+									href="/terms"
+									className="inline-flex items-center gap-2 text-[13px] text-sub transition-colors hover:text-text"
 								>
-									<rect x="3" y="3" width="18" height="18" rx="3" />
-									<path d="M9 12l2 2 4-4" />
-								</svg>
-								Terms of Service — acceptable use, liability, and platform-specific terms
-							</Link>
+									<svg
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.8"
+										aria-hidden
+									>
+										<rect x="3" y="3" width="18" height="18" rx="3" />
+										<path d="M9 12l2 2 4-4" />
+									</svg>
+									Terms of Service — acceptable use, liability, and platform-specific terms
+								</Link>
+								<Link
+									href="/delete-data"
+									className="inline-flex items-center gap-2 text-[13px] text-sub transition-colors hover:text-text"
+								>
+									<svg
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.8"
+										aria-hidden
+									>
+										<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" />
+									</svg>
+									Data Deletion Instructions — how to delete your account and connected data
+								</Link>
+							</div>
 						</div>
 
 						<div className="mt-4 rounded-xl border border-line bg-surface p-5 sm:p-6">

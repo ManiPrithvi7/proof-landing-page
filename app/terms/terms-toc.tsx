@@ -12,9 +12,10 @@ const TOC_ITEMS = [
 	{ id: 's05', label: 'Service Availability' },
 	{ id: 's06', label: 'Termination' },
 	{ id: 's07', label: 'Limitation of Liability' },
-	{ id: 's08', label: 'Third-Party Platforms' },
-	{ id: 's09', label: 'Governing Law' },
-	{ id: 's10', label: 'Changes' },
+	{ id: 's08', label: 'Intellectual Property' },
+	{ id: 's09', label: 'Third-Party Platforms' },
+	{ id: 's10', label: 'Governing Law' },
+	{ id: 's11', label: 'Changes' },
 ] as const
 
 export const TermsToc = () => {
@@ -79,6 +80,12 @@ export const TermsToc = () => {
 				className="block border-l-2 border-transparent py-1.5 pl-2.5 text-[12px] text-gold transition-colors hover:text-gold/90"
 			>
 				→ Privacy Policy
+			</Link>
+			<Link
+				href="/delete-data"
+				className="block border-l-2 border-transparent py-1.5 pl-2.5 text-[12px] text-gold transition-colors hover:text-gold/90"
+			>
+				→ Data Deletion
 			</Link>
 		</nav>
 	)

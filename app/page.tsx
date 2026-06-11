@@ -6,11 +6,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { GetAccessButton } from '@/components/landing/get-access-button'
 
 const NAV_LINKS = [
-	{ href: '#story', label: 'What It Is' },
-	{ href: '#google-data', label: 'Google Data' },
-	{ href: '#how-it-works', label: 'How It Works' },
-	{ href: '#privacy', label: 'Privacy' },
-	{ href: '#about', label: 'About' },
+	{ href: '#story', label: 'What It Is', page: false },
+	{ href: '#google-data', label: 'Google Data', page: false },
+	{ href: '#how-it-works', label: 'How It Works', page: false },
+	{ href: '/privacy', label: 'Privacy', page: true },
+	{ href: '/terms', label: 'Terms', page: true },
+	{ href: '/delete-data', label: 'Data Deletion', page: true },
+	{ href: '#about', label: 'About', page: false },
+] as const
+
+const FOOTER_LEGAL_LINKS = [
+	{ href: '/privacy', label: 'Privacy Policy' },
+	{ href: '/terms', label: 'Terms of Service' },
+	{ href: '/delete-data', label: 'Data Deletion' },
 ] as const
 
 const GOOGLE_DATA_POINTS = [
@@ -151,7 +159,7 @@ export default async function HomePage() {
 			className="min-h-screen bg-background text-foreground"
 		>
 			<nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
-				<div className="mx-auto flex h-[60px] max-w-[900px] items-center justify-between px-6">
+				<div className="mx-auto flex min-h-[60px] max-w-[900px] flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-3">
 					<Link
 						href="/"
 						className="inline-flex items-center"
@@ -161,17 +169,28 @@ export default async function HomePage() {
 						<ProofLogo background="light" priority />
 					</Link>
 
-					<ul className="hidden items-center gap-8 md:flex">
+					<ul className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 sm:gap-x-6 md:gap-x-8">
 						{NAV_LINKS.map((link) => (
 							<li key={link.href}>
-								<a
-									href={link.href}
-									className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-									aria-label={link.label}
-									tabIndex={0}
-								>
-									{link.label}
-								</a>
+								{link.page ? (
+									<Link
+										href={link.href}
+										className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+										aria-label={link.label}
+										tabIndex={0}
+									>
+										{link.label}
+									</Link>
+								) : (
+									<a
+										href={link.href}
+										className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+										aria-label={link.label}
+										tabIndex={0}
+									>
+										{link.label}
+									</a>
+								)}
 							</li>
 						))}
 						<li>
@@ -526,6 +545,33 @@ export default async function HomePage() {
 							</Card>
 						))}
 					</div>
+
+					<div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+						<Link
+							href="/privacy"
+							className="font-medium text-foreground underline underline-offset-4 decoration-warning/50 transition-colors hover:decoration-warning"
+						>
+							Read full Privacy Policy
+						</Link>
+						<span className="text-muted-foreground/40" aria-hidden="true">
+							·
+						</span>
+						<Link
+							href="/terms"
+							className="font-medium text-muted-foreground transition-colors hover:text-foreground"
+						>
+							Terms of Service
+						</Link>
+						<span className="text-muted-foreground/40" aria-hidden="true">
+							·
+						</span>
+						<Link
+							href="/delete-data"
+							className="font-medium text-muted-foreground transition-colors hover:text-foreground"
+						>
+							Data Deletion
+						</Link>
+					</div>
 				</div>
 			</section>
 
@@ -639,25 +685,27 @@ export default async function HomePage() {
 						</a>{' '}
 						· Coimbatore, Tamil Nadu, India
 					</p>
-					<p className="mt-2">
-						<Link
-							href="/privacy"
-							className="text-white/40 transition-colors hover:text-white/60"
-							aria-label="Privacy Policy"
-							tabIndex={0}
-						>
-							Privacy Policy
-						</Link>{' '}
-						·{' '}
-						<Link
-							href="/terms"
-							className="text-white/40 transition-colors hover:text-white/60"
-							aria-label="Terms of Service"
-							tabIndex={0}
-						>
-							Terms of Service
-						</Link>{' '}
-						·{' '}
+					<p className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+						{FOOTER_LEGAL_LINKS.map((link, index) => (
+							<span key={link.href} className="inline-flex items-center gap-2">
+								{index > 0 ? (
+									<span className="text-white/25" aria-hidden="true">
+										·
+									</span>
+								) : null}
+								<Link
+									href={link.href}
+									className="text-white/40 transition-colors hover:text-white/60"
+									aria-label={link.label}
+									tabIndex={0}
+								>
+									{link.label}
+								</Link>
+							</span>
+						))}
+						<span className="text-white/25" aria-hidden="true">
+							·
+						</span>
 						<a
 							href="mailto:hello@withproof.io"
 							className="text-white/40 transition-colors hover:text-white/60"
