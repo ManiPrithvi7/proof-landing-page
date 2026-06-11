@@ -10,8 +10,8 @@ const NAV_LINKS = [
 	{ href: '#google-data', label: 'Google Data', page: false },
 	{ href: '#how-it-works', label: 'How It Works', page: false },
 	{ href: '/privacy', label: 'Privacy', page: true },
-	{ href: '/terms', label: 'Terms', page: true },
-	{ href: '/delete-data', label: 'Data Deletion', page: true },
+	// { href: '/terms', label: 'Terms', page: true },
+	// { href: '/delete-data', label: 'Data Deletion', page: true },
 	{ href: '#about', label: 'About', page: false },
 ] as const
 
