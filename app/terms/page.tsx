@@ -73,6 +73,18 @@ export default function TermsPage() {
 						</svg>
 						Shopify
 					</IntegrationBadge>
+					<IntegrationBadge variant="square">
+						<svg
+							width="9"
+							height="9"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							aria-hidden
+						>
+							<rect x="3" y="3" width="18" height="18" rx="4" />
+						</svg>
+						Square
+					</IntegrationBadge>
 				</div>
 			</div>
 
@@ -84,9 +96,10 @@ export default function TermsPage() {
 							<p>
 								Proof is a read-only analytics dashboard for local
 								brick-and-mortar businesses. It connects to your Google Business
-								Profile, Instagram account, and Shopify store — and surfaces
-								trust signals, review activity, social growth, and revenue data
-								in a single unified dashboard.
+								Profile, Instagram account, Shopify store, or Square POS — and
+								surfaces trust signals, review activity, social growth, revenue
+								data, and campaign redemption metrics in a single unified
+								dashboard.
 							</p>
 							<p>
 								Proof is an independent product built and operated by{' '}
@@ -95,7 +108,8 @@ export default function TermsPage() {
 								</strong>
 								, headquartered in Coimbatore, Tamil Nadu, India. We are not
 								affiliated with, endorsed by, or officially connected to
-								Google LLC, Meta Platforms Inc., or Shopify Inc.
+								Google LLC, Meta Platforms Inc., Shopify Inc., or Block, Inc.
+								(Square).
 							</p>
 						</div>
 						<CalloutNote>
@@ -117,8 +131,8 @@ export default function TermsPage() {
 						<SectionHeading k="02" title="Integration Terms" />
 						<p className="mb-5 text-[13px] leading-[1.8] text-sub">
 							Each connected platform has its own data access scope. Here is
-							exactly what Proof reads from each integration, and what we never
-							do.
+							exactly what Proof reads, processes, and writes for each
+							integration, and what we never do.
 						</p>
 						<IntegrationBlock variant="gmb">
 							<IntRow
@@ -140,6 +154,10 @@ export default function TermsPage() {
 							<IntRow
 								k="Revoke"
 								v="Disconnect at any time from your Proof dashboard or via Google Account → Security → Third-party access."
+							/>
+							<IntRow
+								k="Google API Limited Use"
+								v="Proof's use and transfer of information received from Google APIs to any other app will adhere to Google API Services User Data Policy, including the Limited Use requirements. We do not use Google user data to serve advertisements, train AI/machine learning models, or transfer data to third-party networks for tracking purposes."
 							/>
 						</IntegrationBlock>
 						<IntegrationBlock variant="insta">
@@ -166,21 +184,31 @@ export default function TermsPage() {
 						</IntegrationBlock>
 						<CalloutNote>
 							<strong className="text-gold">Instagram account type:</strong>{' '}
-							Instagram Business or Creator account required. Proof is built for
-							local businesses and only supports professional accounts. This is a
-							product choice — the Basic Display API itself supports personal
-							accounts, but our dashboard features require a public business
-							presence. We access only aggregate metrics available through the
-							Basic Display API.
+							Requires an Instagram Professional Account (Business or Creator).
+							Consumer/Personal accounts are not supported by Meta&apos;s active API
+							framework. We connect via the Instagram Graph API and access only
+							aggregate metrics available through that API.
 						</CalloutNote>
 						<IntegrationBlock variant="shop">
 							<IntRow
-								k="What we read"
-								v="Daily order count, total revenue (aggregate), product count, basic store name and currency"
+								k="Scopes"
+								v="read_products, read_orders, write_discounts"
+							/>
+							<IntRow
+								k="Webhook"
+								v="/api/pos-promotions/webhooks/shopify — permanent real-time subscription to Shopify's orders/paid event loop"
+							/>
+							<IntRow
+								k="What we collect"
+								v="Store metadata, product catalog lines, transaction totals, and merchant-triggered discount criteria"
 							/>
 							<IntRow
 								k="How we use it"
-								v="Displayed as revenue impact signals on your Proof dashboard — to surface how your trust metrics (reviews, social growth) correlate with observed sales trends."
+								v="Product parameters are referenced in your dashboard campaign creation wizard to target specific collections. Order entries and real-time transaction webhooks maintain aggregate daily store revenue graphs and immediately register successful discount code redemptions. This verification layer guarantees that promotion metrics pushed to your physical in-store Proof display are derived exclusively from verified, settled payments."
+							/>
+							<IntRow
+								k="What we write"
+								v="Merchant-triggered discount codes via GraphQL write_discounts — created and deactivated only when you launch or end a campaign from your dashboard"
 							/>
 							<IntRow
 								k="Retention"
@@ -188,11 +216,49 @@ export default function TermsPage() {
 							/>
 							<IntRow
 								k="We never"
-								v="Create, edit, or delete orders or products, access customer personal data, process payments, or share your revenue data with any third party."
+								v="Create or modify orders or products, access customer personal data, process payments, or use write operations outside merchant-initiated campaigns"
 							/>
 							<IntRow
 								k="Revoke"
 								v="Disconnect from your Proof dashboard or via Shopify Admin → Apps → Proof → Delete."
+							/>
+							<IntRow
+								k="Shopify compliance"
+								v="We fully integrate with Shopify's mandatory privacy webhooks (customers/data_request, customers/redact, and shop/redact). Upon receiving a data deletion request or app uninstallation event directly from Shopify's webhooks dashboard, our systems automatically trigger a permanent erasure sequence of linked store metadata within 48 hours."
+							/>
+						</IntegrationBlock>
+						<IntegrationBlock variant="square">
+							<IntRow
+								k="Scopes"
+								v="MERCHANT_PROFILE_READ, ORDERS_READ, ITEMS_READ, ITEMS_WRITE, INVOICES_READ"
+							/>
+							<IntRow
+								k="Webhook"
+								v="/api/pos-promotions/webhooks/square — listens for invoice.payment_made and payment events against issued business invoices"
+							/>
+							<IntRow
+								k="What we collect"
+								v="Store profile data, transactional order metadata, Catalog discount items, and Invoice status records"
+							/>
+							<IntRow
+								k="How we use it"
+								v="To read basic transaction metadata for store trend analytics, to construct requested DISCOUNT catalog records, and to explicitly verify when a digital invoice has been fully paid. This prevents unpaid or pending invoices from incorrectly inflating the verified discount redemption metrics displayed on your physical in-store Proof device."
+							/>
+							<IntRow
+								k="What we write"
+								v="DISCOUNT catalog objects (ITEMS_WRITE) when you explicitly request a campaign discount from your dashboard"
+							/>
+							<IntRow
+								k="Retention"
+								v="Aggregate transaction totals and redemption counts are retained to power trend charts. No customer names, payment card details, or individual invoice recipient data are stored."
+							/>
+							<IntRow
+								k="We never"
+								v="Process payments, modify orders outside merchant-initiated campaigns, or count unpaid or pending invoices as verified redemptions"
+							/>
+							<IntRow
+								k="Revoke"
+								v="Disconnect from your Proof dashboard or via Square Seller Dashboard → Apps → Proof → Disconnect."
 							/>
 						</IntegrationBlock>
 						<CalloutNote>
@@ -231,7 +297,7 @@ export default function TermsPage() {
 									One business per account.
 								</strong>{' '}
 								Each Proof account may be connected to a single set of
-								integrations (one GBP, one Instagram, one Shopify).
+								integrations (one GBP, one Instagram, one Shopify, one Square).
 								Multi-location support is on the roadmap.
 							</TermsLi>
 							<TermsLi>
@@ -247,16 +313,16 @@ export default function TermsPage() {
 									No automated abuse.
 								</strong>{' '}
 								You may not use Proof or its integrations to scrape, clone,
-								redistribute, or resell data from Google, Meta, or Shopify in
-								bulk or in any form not intended by this service.
+								redistribute, or resell data from Google, Meta, Shopify, or
+								Square in bulk or in any form not intended by this service.
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-text">
 									Third-party platform compliance.
 								</strong>{' '}
 								Your use of each integration must also comply with
-								Google&apos;s, Meta&apos;s, and Shopify&apos;s own terms of
-								service. Proof does not grant rights beyond what each platform
+								Google&apos;s, Meta&apos;s, Shopify&apos;s, and Square&apos;s own
+								terms of service. Proof does not grant rights beyond what each
 								permits.
 							</TermsLi>
 							<TermsLi>
@@ -282,9 +348,10 @@ export default function TermsPage() {
 						<CalloutNote>
 							<strong className="text-gold">Important:</strong> We are not
 							responsible for discrepancies, delays, or inaccuracies in data
-							originating from Google&apos;s, Meta&apos;s, or Shopify&apos;s
-							systems. If your review count, follower number, or revenue figure
-							appears incorrect, the source of truth is the respective platform
+							originating from Google&apos;s, Meta&apos;s, Shopify&apos;s, or
+							Square&apos;s systems. If your review count, follower number, or
+							revenue figure appears incorrect, the source of truth is the
+							respective platform
 							directly.
 						</CalloutNote>
 					</section>
@@ -299,8 +366,8 @@ export default function TermsPage() {
 								guaranteed uptime during its current development phase.
 							</TermsLi>
 							<TermsLi>
-								Downtime may occur due to changes in Google, Meta, or Shopify
-								APIs, scheduled maintenance, or infrastructure issues.
+								Downtime may occur due to changes in Google, Meta, Shopify, or
+								Square APIs, scheduled maintenance, or infrastructure issues.
 							</TermsLi>
 							<TermsLi>
 								We will communicate planned downtime via email where possible.
@@ -357,6 +424,20 @@ export default function TermsPage() {
 							</p>
 							<p>
 								<strong className="font-semibold text-text">
+									Proof device data.
+								</strong>{' '}
+								Aggregate metrics are held in device memory only (volatile; clears
+								on power cycle). No server-side logs of device transmissions are
+								retained beyond real-time delivery, unless temporarily enabled for
+								debugging—in which case logs are purged within 7 days. No OAuth
+								tokens are stored on the device. Upon the disconnection of any
+								platform integration or total account cancellation, our servers
+								immediately terminate the MQTT broadcast stream for that metric,
+								causing the physical display to safely clear or obscure that data
+								point on its next automated sync interval.
+							</p>
+							<p>
+								<strong className="font-semibold text-text">
 									Our right to terminate.
 								</strong>{' '}
 								We reserve the right to suspend accounts that violate these
@@ -391,8 +472,8 @@ export default function TermsPage() {
 							</TermsLi>
 							<TermsLi>
 								We are not liable for any disruption to your connected platforms
-								(Google, Instagram, Shopify) caused by changes to their own
-								APIs or policies.
+								(Google, Instagram, Shopify, Square) caused by changes to their
+								own APIs or policies.
 							</TermsLi>
 							<TermsLi>
 								We are not liable for aggregate data visible on Proof devices to
@@ -410,7 +491,7 @@ export default function TermsPage() {
 							<p>
 								All Proof branding, software, and dashboard design are owned by
 								Statsnapp Technologies. Dashboard data originates from Google,
-								Meta, and Shopify and is shown under your authorization.
+								Meta, Shopify, and Square and is shown under your authorization.
 							</p>
 							<p>
 								You may share your own dashboard data; you may not reproduce
@@ -490,6 +571,27 @@ export default function TermsPage() {
 									className="text-[#96bf48] underline underline-offset-[3px] hover:opacity-90"
 								>
 									Shopify API Terms
+								</a>
+								.
+							</TermsLi>
+							<TermsLi>
+								<span className="text-[#006AFF]">Square</span> — subject to{' '}
+								<a
+									href="https://squareup.com/us/en/legal/general/ua"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[#006AFF] underline underline-offset-[3px] hover:opacity-90"
+								>
+									Square General Terms of Service
+								</a>{' '}
+								and the{' '}
+								<a
+									href="https://developer.squareup.com/docs/home"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[#006AFF] underline underline-offset-[3px] hover:opacity-90"
+								>
+									Square Developer Terms
 								</a>
 								.
 							</TermsLi>
@@ -661,13 +763,14 @@ function IntegrationBadge({
 	variant,
 	children,
 }: {
-	variant: 'gmb' | 'insta' | 'shop'
+	variant: 'gmb' | 'insta' | 'shop' | 'square'
 	children: ReactNode
 }) {
 	const styles = {
 		gmb: 'border-[#4285f4]/20 bg-[#4285f4]/[0.07] text-[#4285f4]',
 		insta: 'border-[#c13584]/20 bg-[#c13584]/[0.07] text-[#c13584]',
 		shop: 'border-[#96bf48]/20 bg-[#96bf48]/[0.07] text-[#96bf48]',
+		square: 'border-[#006AFF]/20 bg-[#006AFF]/[0.07] text-[#006AFF]',
 	} as const
 	return (
 		<span
@@ -682,7 +785,7 @@ function IntegrationBlock({
 	variant,
 	children,
 }: {
-	variant: 'gmb' | 'insta' | 'shop'
+	variant: 'gmb' | 'insta' | 'shop' | 'square'
 	children: ReactNode
 }) {
 	const header = {
@@ -691,7 +794,7 @@ function IntegrationBlock({
 			iconBg: 'bg-[#4285f4]/10',
 			title: 'text-[#4285f4]',
 			name: 'Google Business Profile',
-			tag: 'OAuth 2.0 · Read-only · business.manage scope',
+			tag: 'OAuth 2.0 · Read-only · business.manage, openid, userinfo.profile, userinfo.email',
 			icon: (
 				<svg
 					width="13"
@@ -709,7 +812,7 @@ function IntegrationBlock({
 			iconBg: 'bg-[#c13584]/10',
 			title: 'text-[#c13584]',
 			name: 'Instagram',
-			tag: 'Instagram Basic Display API · Read-only · Business or Creator account',
+			tag: 'Instagram Graph API · Read-only · Business or Creator account',
 			icon: (
 				<svg
 					width="13"
@@ -732,7 +835,7 @@ function IntegrationBlock({
 			iconBg: 'bg-[#96bf48]/10',
 			title: 'text-[#96bf48]',
 			name: 'Shopify',
-			tag: 'Shopify Admin API · Read-only · Orders & Products scope',
+			tag: 'Admin API & Event Webhooks · read_products, read_orders, write_discounts',
 			icon: (
 				<svg
 					width="13"
@@ -742,6 +845,24 @@ function IntegrationBlock({
 					aria-hidden
 				>
 					<path d="M20.9 7.2c0-.1-.1-.1-.1-.1s-.1 0-.1-.1c-.9-.1-1.7-.1-2.5-.1-.2-.9-.5-1.7-.9-2.5-.7-1.2-1.7-1.9-2.9-1.9h-.1c-.1-.2-.4-.3-.6-.5-.8-.5-1.7-.7-2.7-.6C8.7 1.5 7 3 6.1 5c-.6 1.4-.8 2.7-.8 4.1-.9.3-1.6.5-1.6.5l-.6 14h13.5l1.6-14-1.1-.2c.1-.1.1-.2.1-.3 0-.5-.2-1.1-.3-1.9zm-4.1 0H14c-.1-1.3-.3-2.4-.7-3.3.9.4 1.6 1.7 1.5 3.3zM12 3.2c.4.9.7 2 .8 3.2H9.3c.2-1.2.5-2.4 1-3.2.3-.5.6-.8 1-.8s.5.3.7.8zM9.2 3.8c-.4.9-.7 2-.8 3.3H6.8c.5-1.7 1.3-3 2.4-3.3z" />
+				</svg>
+			),
+		},
+		square: {
+			bg: 'bg-[#006AFF]/[0.05]',
+			iconBg: 'bg-[#006AFF]/10',
+			title: 'text-[#006AFF]',
+			name: 'Square',
+			tag: 'Catalog, Orders & Invoices API · MERCHANT_PROFILE_READ, ORDERS_READ, ITEMS_READ, ITEMS_WRITE, INVOICES_READ',
+			icon: (
+				<svg
+					width="13"
+					height="13"
+					viewBox="0 0 24 24"
+					fill="#006AFF"
+					aria-hidden
+				>
+					<rect x="3" y="3" width="18" height="18" rx="4" />
 				</svg>
 			),
 		},

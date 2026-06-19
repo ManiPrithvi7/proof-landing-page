@@ -56,7 +56,8 @@ export default function PrivacyPage() {
 									Founder@withproof.io
 								</a>
 								. We respond to all enquiries including those from Google&apos;s,
-								Meta&apos;s, and Shopify&apos;s review and compliance teams.
+								Meta&apos;s, Shopify&apos;s, and Square&apos;s review and compliance
+								teams.
 							</p>
 						</div>
 					</section>
@@ -158,7 +159,7 @@ export default function PrivacyPage() {
 						<PlatformLabel
 							accentClassName="text-[#c13584]"
 							iconClassName="bg-[#c13584]/10"
-							scope="Basic Display API · read-only"
+							scope="Instagram Graph API · read-only"
 							name="Instagram"
 							icon={
 								<svg
@@ -191,11 +192,11 @@ export default function PrivacyPage() {
 									why: 'Displayed on your Proof dashboard as a social growth metric and, when enabled, on a connected Proof device (in development)',
 								},
 								{
-									data: 'Reach (aggregate)',
+									data: 'Reach metrics (aggregate)',
 									why: 'Used to power reach trend charts over 30 / 90 day windows',
 								},
 								{
-									data: 'Impressions (aggregate)',
+									data: 'Post impressions (aggregate)',
 									why: 'Shown alongside reach to indicate content visibility',
 								},
 								{
@@ -204,6 +205,12 @@ export default function PrivacyPage() {
 								},
 							]}
 						/>
+						<Callout variant="gold">
+							<strong className="text-gold">Connection profile:</strong>{' '}
+							Requires an Instagram Professional Account (Business or Creator).
+							Consumer/Personal accounts are not supported by Meta&apos;s active API
+							framework.
+						</Callout>
 						<Callout variant="gold">
 							<strong className="text-gold">Proof device (in development).</strong>{' '}
 							When available, aggregate metrics from connected integrations—including
@@ -217,7 +224,7 @@ export default function PrivacyPage() {
 						<PlatformLabel
 							accentClassName="text-[#96bf48]"
 							iconClassName="bg-[#96bf48]/10"
-							scope="Admin API · read-only"
+							scope="read_products, read_orders, write_discounts · orders/paid webhook"
 							name="Shopify"
 							icon={
 								<svg
@@ -235,23 +242,87 @@ export default function PrivacyPage() {
 						<DataTable
 							rows={[
 								{
-									data: 'Daily order count',
-									why: 'Used to surface revenue trend signals on the dashboard',
+									data: 'Store metadata & product catalog lines',
+									why: 'Referenced in your dashboard campaign wizard to target specific collections',
 								},
 								{
-									data: 'Aggregate revenue total',
-									why: 'Shown to correlate trust metrics (reviews, followers) with sales trends',
+									data: 'Transaction totals & order entries',
+									why: 'Used to maintain aggregate daily store revenue graphs on your dashboard',
 								},
 								{
-									data: 'Product count',
-									why: 'Used to contextualise store activity',
+									data: 'orders/paid webhook events',
+									why: 'Real-time subscription verifies settled payments and registers successful discount code redemptions',
 								},
 								{
-									data: 'Store name & currency',
-									why: 'Used to label revenue data correctly on your dashboard',
+									data: 'Merchant-triggered discount criteria',
+									why: 'Creates and deactivates promotion codes via write_discounts when you launch or end a campaign',
 								},
 							]}
 						/>
+						<Callout variant="gold">
+							<strong className="text-gold">Webhook endpoint:</strong>{' '}
+							<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+								/api/pos-promotions/webhooks/shopify
+							</code>
+							. Promotion metrics pushed to your physical in-store Proof device are
+							derived exclusively from verified, settled payments — not pending or
+							unpaid orders.
+						</Callout>
+
+						<PlatformLabel
+							accentClassName="text-[#006AFF]"
+							iconClassName="bg-[#006AFF]/10"
+							scope="MERCHANT_PROFILE_READ, ORDERS_READ, ITEMS_READ, ITEMS_WRITE, INVOICES_READ"
+							name="Square"
+							icon={
+								<svg
+									width="12"
+									height="12"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									className="text-[#006AFF]"
+									aria-hidden
+								>
+									<rect x="3" y="3" width="18" height="18" rx="4" />
+								</svg>
+							}
+						/>
+						<DataTable
+							rows={[
+								{
+									data: 'Store profile data',
+									why: 'Identifies store name and currency on your dashboard',
+								},
+								{
+									data: 'Transactional order metadata',
+									why: 'Powers store trend analytics and aggregate daily revenue graphs',
+								},
+								{
+									data: 'Catalog discount items',
+									why: 'Constructs DISCOUNT catalog records when you trigger a campaign from your dashboard',
+								},
+								{
+									data: 'Invoice status records',
+									why: 'Tracks settlement of emailed business invoices for custom packages, bulk services, or catering',
+								},
+								{
+									data: 'invoice.payment_made webhook events',
+									why: 'Verifies when a digital invoice has been fully paid — prevents unpaid or pending invoices from inflating verified discount redemption metrics on your Proof device',
+								},
+							]}
+						/>
+						<Callout variant="gold">
+							<strong className="text-gold">Webhook endpoint:</strong>{' '}
+							<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+								/api/pos-promotions/webhooks/square
+							</code>
+							. We use{' '}
+							<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+								INVOICES_READ
+							</code>{' '}
+							to listen for invoice payment events and prevent unpaid invoices from
+							incorrectly inflating front-desk hardware metrics.
+						</Callout>
 					</section>
 
 					<div className="mb-14 h-px bg-line" role="separator" />
@@ -261,9 +332,10 @@ export default function PrivacyPage() {
 						<ul className="list-none">
 							<TermsLi>
 								To display your trust metrics, review activity, social growth,
-								and revenue signals on your Proof dashboard and, when enabled, on
-								connected Proof devices at your business location (see Display
-								surfaces below) — the sole purpose of every data point we collect.
+								revenue signals, and verified campaign redemption metrics on your
+								Proof dashboard and, when enabled, on connected Proof devices at
+								your business location (see Display surfaces below) — the sole
+								purpose of every data point we collect.
 							</TermsLi>
 							<TermsLi>
 								To transmit aggregate trust metrics to connected Proof devices over
@@ -314,6 +386,24 @@ export default function PrivacyPage() {
 								Volatile memory only.
 							</li>
 						</ol>
+						<p className="mb-3 mt-8 text-[12px] font-semibold uppercase tracking-[0.06em] text-dim">
+							Google API Limited Use Disclosure
+						</p>
+						<p className="text-[14px] leading-[1.8] text-sub">
+							Proof&apos;s use and transfer of information received from Google APIs
+							to any other app will adhere to{' '}
+							<a
+								href="https://developers.google.com/terms/api-services-user-data-policy"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-gmb underline underline-offset-2 hover:opacity-90"
+							>
+								Google API Services User Data Policy
+							</a>
+							, including the Limited Use requirements. We do not use Google user
+							data to serve advertisements, train AI/machine learning models, or
+							transfer data to third-party networks for tracking purposes.
+						</p>
 					</section>
 
 					<div className="mb-14 h-px bg-line" role="separator" />
@@ -349,7 +439,7 @@ export default function PrivacyPage() {
 								}
 							/>
 							<RetCard
-								label="Instagram & Shopify aggregates"
+								label="Instagram, Shopify & Square aggregates"
 								value={
 									<>
 										<strong className="font-medium text-text">
@@ -405,10 +495,34 @@ export default function PrivacyPage() {
 										</strong>
 										, unless temporarily enabled for debugging—in which case logs
 										are purged within 7 days. No OAuth tokens stored on the device.
+										Upon the disconnection of any platform integration or total
+										account cancellation, our servers immediately terminate the MQTT
+										broadcast stream for that metric, causing the physical display
+										to safely clear or obscure that data point on its next automated
+										sync interval.
 									</>
 								}
 							/>
 						</div>
+						<Callout variant="gold">
+							<strong className="text-gold">Shopify Data &amp; Redaction Compliance.</strong>{' '}
+							We fully integrate with Shopify&apos;s mandatory privacy webhooks (
+							<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+								customers/data_request
+							</code>
+							,{' '}
+							<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+								customers/redact
+							</code>
+							, and{' '}
+							<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+								shop/redact
+							</code>
+							). Upon receiving a data deletion request or app uninstallation event
+							directly from Shopify&apos;s webhooks dashboard, our systems automatically
+							trigger a permanent erasure sequence of linked store metadata within 48
+							hours.
+						</Callout>
 					</section>
 
 					<div className="mb-14 h-px bg-line" role="separator" />
@@ -425,31 +539,99 @@ export default function PrivacyPage() {
 								<strong className="text-gmb font-semibold">
 									Google Business Profile
 								</strong>{' '}
-								— via Google OAuth 2.0 ({' '}
+								— via Google OAuth 2.0. We request access to the following scopes
+								to authenticate your profile and safely map business metrics:{' '}
 								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
-									business.manage
+									https://www.googleapis.com/auth/business.manage
 								</code>{' '}
-								scope, read-only). New review events are received via Google
-								Cloud Pub/Sub (My Business Notifications API) — not by polling.
+								(read-only metric retrieval),{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									openid
+								</code>
+								,{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									https://www.googleapis.com/auth/userinfo.profile
+								</code>
+								, and{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									https://www.googleapis.com/auth/userinfo.email
+								</code>
+								. New review events are received via Google Cloud Pub/Sub (My
+								Business Notifications API).
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-[#c13584]">
 									Instagram
 								</strong>{' '}
-								— via Meta&apos;s Instagram Basic Display API OAuth flow.
-								Instagram Business or Creator account required. Proof is built for
-								local businesses and only supports professional accounts. This is
-								a product choice — the Basic Display API itself supports personal
-								accounts, but our dashboard features require a public business
-								presence. We access only aggregate metrics available through the
-								Basic Display API.
+								— via Meta&apos;s Instagram Graph API OAuth flow (read-only). We
+								access follower count, reach metrics (aggregate), post impressions
+								(aggregate), and profile visit count. Requires an Instagram
+								Professional Account (Business or Creator). Consumer/Personal
+								accounts are not supported by Meta&apos;s active API framework.
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-[#96bf48]">
 									Shopify
 								</strong>{' '}
-								— via Shopify&apos;s OAuth app install flow using the Admin API with
-								read-only orders and products scopes.
+								— via Shopify&apos;s OAuth app install flow (Admin API &amp; Event
+								Webhooks). Scopes:{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									read_products
+								</code>
+								,{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									read_orders
+								</code>
+								,{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									write_discounts
+								</code>
+								. Webhook endpoint:{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									/api/pos-promotions/webhooks/shopify
+								</code>
+								. We maintain a real-time subscription to Shopify&apos;s{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									orders/paid
+								</code>{' '}
+								event loop to verify settled payments and register discount code
+								redemptions for your dashboard and Proof device.
+							</TermsLi>
+							<TermsLi>
+								<strong className="font-semibold text-[#006AFF]">
+									Square
+								</strong>{' '}
+								— via Square OAuth 2.0 (Catalog, Orders, and Invoices API).
+								Scopes:{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									MERCHANT_PROFILE_READ
+								</code>
+								,{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									ORDERS_READ
+								</code>
+								,{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									ITEMS_READ
+								</code>
+								,{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									ITEMS_WRITE
+								</code>
+								,{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									INVOICES_READ
+								</code>
+								. Webhook endpoint:{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									/api/pos-promotions/webhooks/square
+								</code>
+								. Listens for{' '}
+								<code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[11px] text-gold">
+									invoice.payment_made
+								</code>{' '}
+								events to verify fully paid digital invoices before counting
+								discount redemptions on your Proof device.
 							</TermsLi>
 						</ul>
 					</section>
@@ -460,13 +642,21 @@ export default function PrivacyPage() {
 						<SectionHeading k="06" title="What We Never Do" />
 						<ul className="list-none">
 							<TermsLi>
-								Write to, edit, or modify your Google Business Profile,
-								Instagram account, or Shopify store in any way.
+								Execute unauthorized or automated write operations on your Google
+								Business Profile, Instagram account, Shopify store, or Square
+								catalog. Discount catalog records and promotion codes are created
+								only when you explicitly trigger a campaign from your Proof
+								dashboard.
 							</TermsLi>
 							<TermsLi>Post, respond to, or flag reviews on your behalf.</TermsLi>
 							<TermsLi>
 								Access individual customer names, addresses, payment details, or
-								any personally identifiable information from Shopify orders.
+								any personally identifiable information from Shopify or Square
+								transactions.
+							</TermsLi>
+							<TermsLi>
+								Count unpaid or pending Square invoices as verified discount
+								redemptions on your Proof device.
 							</TermsLi>
 							<TermsLi>
 								Read private Instagram messages, story content, or follower
@@ -550,7 +740,8 @@ export default function PrivacyPage() {
 								Third-party apps with account access → Remove Proof; Instagram
 								app → Menu → Settings and privacy → Website permissions → Apps
 								and websites → Active → Remove Proof; Shopify Admin → Settings →
-								Apps and sales channels → Remove Proof.
+								Apps and sales channels → Remove Proof; Square Seller Dashboard →
+								Apps → Proof → Disconnect.
 							</TermsLi>
 							<TermsLi>
 								<strong className="font-semibold text-text">
@@ -664,7 +855,7 @@ export default function PrivacyPage() {
 							</TermsLi>
 							<TermsLi>
 								<span className="text-[#c13584]">
-									Instagram Basic Display API
+									Instagram Graph API
 								</span>{' '}
 								—{' '}
 								<a
@@ -677,7 +868,10 @@ export default function PrivacyPage() {
 								</a>
 							</TermsLi>
 							<TermsLi>
-								<span className="text-[#96bf48]">Shopify Admin API</span> —{' '}
+								<span className="text-[#96bf48]">
+									Shopify Admin API &amp; Event Webhooks
+								</span>{' '}
+								—{' '}
 								<a
 									href="https://www.shopify.com/legal/privacy"
 									target="_blank"
@@ -685,6 +879,29 @@ export default function PrivacyPage() {
 									className="text-[#96bf48] underline underline-offset-[3px] hover:opacity-90"
 								>
 									Shopify Privacy Policy
+								</a>
+							</TermsLi>
+							<TermsLi>
+								<span className="text-[#006AFF]">
+									Square Catalog, Orders &amp; Invoices API
+								</span>{' '}
+								—{' '}
+								<a
+									href="https://squareup.com/us/en/legal/general/privacy"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[#006AFF] underline underline-offset-[3px] hover:opacity-90"
+								>
+									Square Privacy Policy
+								</a>{' '}
+								·{' '}
+								<a
+									href="https://developer.squareup.com/docs/home"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[#006AFF] underline underline-offset-[3px] hover:opacity-90"
+								>
+									Square Developer Terms
 								</a>
 							</TermsLi>
 						</ul>
