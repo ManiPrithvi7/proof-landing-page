@@ -40,6 +40,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
+
+<meta name="google-site-verification" content="Fb-95YJ6Z2mySzoEpuCN2X3Ux2kZz8GjDXBzZ3og6iA" />
 			<body
 				className={`${dmSans.variable} ${fraunces.variable} ${dmMono.variable} font-sans antialiased`}
 			>
